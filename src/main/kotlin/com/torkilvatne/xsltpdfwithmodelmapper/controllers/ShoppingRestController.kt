@@ -14,18 +14,24 @@ class ShoppingRestController(
     private val shoppingService: ShoppingService,
 ) {
     @GetMapping(
-        value = ["/getorder/{customerId}/{language}/{format}"],
-        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
+        value = ["/getorder/xml/{customerId}/{language}/"],
+        produces = [MediaType.APPLICATION_XML_VALUE]
     )
-    fun getCustomerById(
+    fun getCustomerXmlById(
         @PathVariable customerId: Int,
         @PathVariable language: String,
-        @PathVariable format: String,
     ): ResponseEntity<String> {
-        return when (format) {
-            "pdf" -> ResponseEntity.ok(shoppingService.createPdfFromCustomer(customerId, language))
-            "xml" -> ResponseEntity.ok(shoppingService.createXmlFromCustomer(customerId, language))
-            else -> ResponseEntity.ok("Please define format")
-        }
+        return ResponseEntity.ok(shoppingService.createXmlFromCustomer(customerId, language))
+    }
+
+    @GetMapping(
+        value = ["/getorder/pdf/{customerId}/{language}/"],
+        produces = [MediaType.APPLICATION_PDF_VALUE]
+    )
+    fun getCustomerPdfById(
+        @PathVariable customerId: Int,
+        @PathVariable language: String,
+    ): ResponseEntity<ByteArray> {
+        return ResponseEntity.ok(shoppingService.createPdfFromCustomer(customerId, language))
     }
 }

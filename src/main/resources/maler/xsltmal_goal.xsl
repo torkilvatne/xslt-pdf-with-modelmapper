@@ -101,7 +101,10 @@
             </fo:marker>
           </fo:block>
           <xsl:for-each select="CustomerPDF">
-            <xsl:apply-templates select="customer" />
+            <fo:block language="NO">
+              Dette er en CustomerPDF
+            </fo:block>
+            <xsl:apply-templates select="customers" />
           </xsl:for-each>
         </fo:flow>
       </fo:page-sequence>
@@ -121,12 +124,31 @@
   </xsl:template>
 
   <!-- =========================== Default Templates ================================ -->
-  <xsl:template match="customer">
-    <fo:block font-size="8pt" language="NO" margin-bottom="2mm">
-      <xsl:value-of select="./customerId/text()" />
+  <xsl:template match="customers">
+    <fo:block language="NO">
+      Customer list:
     </fo:block>
-    <fo:block language="NO" margin-bottom="2mm" role="H2">
-      <xsl:value-of select="./name/firstname/text()" />
+    <fo:block language="NO">
+      <fo:table border="1">
+        <fo:tr bgcolor="#9acd32">
+          <fo:th>ID</fo:th>
+          <fo:th>First name</fo:th>
+          <fo:th>Last name</fo:th>
+        </fo:tr>
+        <xsl:for-each select="customer">
+          <fo:tr>
+            <fo:td>
+              <xsl:value-of select="./customerId/text()" />
+            </fo:td>
+            <fo:td>
+              <xsl:value-of select="./name/firstName/text()" />
+            </fo:td>
+            <fo:td>
+              <xsl:value-of select="./name/lastName/text()" />
+            </fo:td>
+          </fo:tr>
+        </xsl:for-each>
+      </fo:table>
     </fo:block>
   </xsl:template>
 

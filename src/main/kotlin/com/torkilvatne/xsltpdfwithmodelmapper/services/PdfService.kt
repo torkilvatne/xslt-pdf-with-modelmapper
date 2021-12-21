@@ -29,18 +29,18 @@ class PdfService {
 
     fun generatePdf(
         xml: String
-    ): String {
+    ): ByteArray {
 
-        val xslSource = StreamSource(File("src/main/resources/maler/xslmal.xsl"))
+        val xslSource = StreamSource(File("src/main/resources/maler/temp.xsl"))
         val input = StreamSource(StringReader(xml))
+        val baos = ByteArrayOutputStream()
         val tf: TransformerFactory = TransformerFactory.newInstance()
+        val result = StreamResult(baos)
 
         try {
             val transformer = tf.newTransformer(xslSource)
-            val baos = ByteArrayOutputStream()
-            val result = StreamResult(baos)
             transformer.transform(input, result)
-            return String(baos.toByteArray())
+            return baos.toByteArray()
         } catch (e: TransformerConfigurationException) {
             throw TransformerConfigurationException()
         } catch (e: TransformerException) {
