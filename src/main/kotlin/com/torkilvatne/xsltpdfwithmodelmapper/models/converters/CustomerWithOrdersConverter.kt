@@ -14,6 +14,6 @@ class CustomerWithOrdersConverter(
     override fun convert(context: MappingContext<Customer, CustomerWithOrders>): CustomerWithOrders {
         val source: Customer = context.source
         val customerOrders = customersService.getOrders(source.customerId)
-        return CustomerWithOrders(source, customerOrders)
+        return CustomerWithOrders(source.customerId, source.name, source.address, customerOrders)
     }
 }

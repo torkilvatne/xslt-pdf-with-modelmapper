@@ -1,10 +1,23 @@
 package com.torkilvatne.xsltpdfwithmodelmapper.models
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import com.torkilvatne.xsltpdfwithmodelmapper.annotations.NoArg
 
 @NoArg
+@JacksonXmlRootElement(localName = "CustomerPDF")
+data class CustomerPDF(
+    @get:JacksonXmlElementWrapper(localName = "customers")
+    @get:JacksonXmlProperty(localName = "customer")
+    var customers: Collection<CustomerWithOrders>,
+)
+
+@NoArg
 data class CustomerWithOrders(
-    var customer: Customer,
+    var customerId: Int,
+    var name: Name,
+    var address: Address,
     var orderList: List<Order>,
 )
 
