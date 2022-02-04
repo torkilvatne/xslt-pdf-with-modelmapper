@@ -52,7 +52,7 @@ class PdfService {
     ): ByteArray {
         // Code copied from https://www.netjstech.com/2015/07/how-to-create-pdf-from-xml-using-apache-fop.html
         // the XSL FO file
-        val xsltFile = File("src/main/resources/maler/style.xsl")
+        val xsltFile = File("src/main/resources/maler/layout.xsl")
         // the XML file which provides the input
         val xmlSource = StreamSource(StringReader(xml))
         // create an instance of fop factory
@@ -79,5 +79,5 @@ class PdfService {
         }
         return baos.toByteArray()
     }
-    
+
 }

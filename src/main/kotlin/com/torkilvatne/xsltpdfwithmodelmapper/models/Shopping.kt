@@ -18,13 +18,27 @@ data class CustomerWithOrders(
     var customerId: Int,
     var name: Name,
     var address: Address,
-    var orderList: List<Order>,
+    @get:JacksonXmlElementWrapper(localName = "orders")
+    @get:JacksonXmlProperty(localName = "order")
+    var orderList: List<OrderWithProduct>,
 )
 
 @NoArg
 data class Order(
     var customerId: Int,
     var productId: Int,
+)
+
+@NoArg
+data class OrderWithProduct(
+    var customerId: Int,
+    var product: Product,
+)
+
+@NoArg
+data class Product(
+    var productId: Int,
+    val price: Int,
 )
 
 @NoArg

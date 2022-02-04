@@ -1,10 +1,7 @@
 package com.torkilvatne.xsltpdfwithmodelmapper.services
 
+import com.torkilvatne.xsltpdfwithmodelmapper.models.*
 import org.springframework.stereotype.Service
-import com.torkilvatne.xsltpdfwithmodelmapper.models.Address
-import com.torkilvatne.xsltpdfwithmodelmapper.models.Customer
-import com.torkilvatne.xsltpdfwithmodelmapper.models.Name
-import com.torkilvatne.xsltpdfwithmodelmapper.models.Order
 
 @Service
 class CustomersService {
@@ -16,8 +13,12 @@ class CustomersService {
         return orderList.find { it.customerId == id }
     }
 
-    fun getOrders(id: Int): List<Order> {
-        return orderList.filter { it.customerId == id }
+    fun getOrders(cid: Int): List<Order> {
+        return orderList.filter { it.customerId == cid }
+    }
+
+    fun getProduct(pid: Int): Product {
+        return productList.first { it.productId == pid }
     }
 
     val customerList: Map<Int, Customer> = mapOf(
@@ -32,5 +33,16 @@ class CustomersService {
         Order(456, 222),
         Order(456, 333),
         Order(456, 333),
+        Order(456, 444),
+        Order(789, 444),
+        Order(789, 111),
+        Order(789, 222),
+    )
+
+    val productList: List<Product> = listOf(
+        Product(111, 100),
+        Product(222, 299),
+        Product(333, 59),
+        Product(444, 1999),
     )
 }
