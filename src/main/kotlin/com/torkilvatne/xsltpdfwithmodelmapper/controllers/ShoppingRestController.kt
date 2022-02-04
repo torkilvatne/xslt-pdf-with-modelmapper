@@ -13,8 +13,12 @@ import com.torkilvatne.xsltpdfwithmodelmapper.services.ShoppingService
 class ShoppingRestController(
     private val shoppingService: ShoppingService,
 ) {
+
+    /*
+        XML
+    */
     @GetMapping(
-        value = ["/getorder/xml/{customerId}/{language}/"],
+        value = ["/getcustomer/xml/{customerId}/{language}/"],
         produces = [MediaType.APPLICATION_XML_VALUE]
     )
     fun getCustomerXmlById(
@@ -25,7 +29,19 @@ class ShoppingRestController(
     }
 
     @GetMapping(
-        value = ["/getorder/pdf/{customerId}/{language}/"],
+        value = ["/getcustomers/xml/"],
+        produces = [MediaType.APPLICATION_XML_VALUE]
+    )
+    fun getCustomersXml(): ResponseEntity<String> {
+        return ResponseEntity.ok(shoppingService.createXmlFromAllCustomers())
+    }
+
+
+    /*
+        PDF
+    */
+    @GetMapping(
+        value = ["/getcustomer/pdf/{customerId}/{language}/"],
         produces = [MediaType.APPLICATION_PDF_VALUE]
     )
     fun getCustomerPdfById(
@@ -33,5 +49,13 @@ class ShoppingRestController(
         @PathVariable language: String,
     ): ResponseEntity<ByteArray?> {
         return ResponseEntity.ok(shoppingService.createPdfFromCustomer(customerId, language))
+    }
+
+    @GetMapping(
+        value = ["/getcustomers/pdf/"],
+        produces = [MediaType.APPLICATION_PDF_VALUE]
+    )
+    fun getCustomersPdf(): ResponseEntity<ByteArray?> {
+        return ResponseEntity.ok(shoppingService.createPdfFromCustomers())
     }
 }

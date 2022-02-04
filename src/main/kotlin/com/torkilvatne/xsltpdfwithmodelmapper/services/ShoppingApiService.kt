@@ -16,4 +16,8 @@ class ShoppingApiService(
             else -> modelMapper.map(customer, CustomerWithOrders::class.java)
         }
     }
+
+    fun handleGetAllCustomers(): List<CustomerWithOrders> {
+        return customersService.customerList.values.map { modelMapper.map(it, CustomerWithOrders::class.java) }
+    }
 }

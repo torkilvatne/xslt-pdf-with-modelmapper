@@ -17,7 +17,19 @@ class ShoppingService(
         return pdfService.serializeAsXML(CustomerPDF(listOf(customer)))
     }
 
+    fun createXmlFromAllCustomers(): String {
+        val customer = shoppingApiService.handleGetAllCustomers()
+        if (customer.isEmpty()) {
+            throw CustomerNotFoundException("No customers in database!");
+        }
+        return pdfService.serializeAsXML(CustomerPDF(customer))
+    }
+
     fun createPdfFromCustomer(cid: Int, language: String): ByteArray {
         return pdfService.generatePdf(createXmlFromCustomer(cid, language))
+    }
+
+    fun createPdfFromCustomers(): ByteArray {
+        return pdfService.generatePdf(createXmlFromAllCustomers())
     }
 }
