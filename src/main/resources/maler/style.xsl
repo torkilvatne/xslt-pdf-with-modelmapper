@@ -11,11 +11,37 @@
             </fo:layout-master-set>
             <fo:page-sequence master-reference="simpleA4">
                 <fo:flow flow-name="xsl-region-body">
-                    <fo:block font-family="Helvetica" color="red" font-size="16pt" font-weight="bold">
-                        Hello
-                    </fo:block>
+                    <xsl:apply-templates/>
                 </fo:flow>
             </fo:page-sequence>
         </fo:root>
     </xsl:template>
+
+    <xsl:template match="CustomerPDF">
+        <fo:block font-family="Helvetica" font-size="24pt" font-weight="bold">
+            Customer PDF
+        </fo:block>
+        <xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template match="customers">
+        <xsl:for-each select="customer">
+            <fo:block>
+                <fo:inline>
+                    Name:
+                </fo:inline>
+                <fo:inline>
+                    <xsl:value-of select="./name/firstName/text()"/>
+                </fo:inline>
+                <fo:inline>
+                    <xsl:value-of select="./name/lastName/text()"/>
+                </fo:inline>
+            </fo:block>
+            <fo:block>
+                ID:
+                <xsl:value-of select="./customerId/text()"/>
+            </fo:block>
+        </xsl:for-each>
+    </xsl:template>
+
 </xsl:stylesheet>

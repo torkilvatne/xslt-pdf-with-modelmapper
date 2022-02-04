@@ -68,12 +68,6 @@
       <artifactId>modelmapper</artifactId>
       <version>${modelmapper.version}</version>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>org.apache.pdfbox</groupId>-->
-<!--      <artifactId>pdfbox</artifactId>-->
-<!--      <version>${pdfbox.version}</version>-->
-<!--      <scope>test</scope>-->
-<!--    </dependency>-->
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-xml</artifactId>

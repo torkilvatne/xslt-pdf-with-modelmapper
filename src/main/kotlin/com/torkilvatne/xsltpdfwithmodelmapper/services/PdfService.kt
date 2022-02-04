@@ -27,50 +27,29 @@ class PdfService {
         try {
             return objectMapper.writeValueAsString(obj)
         } catch (e: CannotSerializeCustomerException) {
-            throw CannotSerializeCustomerException("Can't serialize object: ${obj.toString()}")
+            throw CannotSerializeCustomerException("Can't serialize object: $obj")
         }
     }
 
     fun generatePdf(
         xml: String
-    ): ByteArray? {
-
-        /*val xslSource = StreamSource(File("src/main/resources/maler/temp.xsl"))
-        val input = StreamSource(StringReader(xml))
-        val baos = ByteArrayOutputStream()
-        val tf: TransformerFactory = TransformerFactory.newInstance()
-        val result = StreamResult(baos)
-
+    ): ByteArray {
         try {
-            val transformer = tf.newTransformer(xslSource)
-            transformer.transform(input, result)
-            return baos.toByteArray()
-        } catch (e: TransformerConfigurationException) {
-            throw TransformerConfigurationException()
-        } catch (e: TransformerException) {
-            throw TransformerException(e.message)
-        }*/
-
-        try {
-            convertToPDF(xml)
+            return convertToPDF(xml)
         } catch (e: FOPException) {
-            // TODO Auto-generated catch block
             e.printStackTrace()
         } catch (e: IOException) {
-            // TODO Auto-generated catch block
             e.printStackTrace()
         } catch (e: TransformerException) {
-            // TODO Auto-generated catch block
             e.printStackTrace()
         }
-        return null
-
+        return byteArrayOf()
     }
 
     @Throws(IOException::class, FOPException::class, TransformerException::class)
     fun convertToPDF(
         xml: String
-    ) {
+    ): ByteArray {
         // Code copied from https://www.netjstech.com/2015/07/how-to-create-pdf-from-xml-using-apache-fop.html
         // the XSL FO file
         val xsltFile = File("src/main/resources/maler/style.xsl")
@@ -81,11 +60,10 @@ class PdfService {
         // a user agent is needed for transformation
         val foUserAgent = fopFactory.newFOUserAgent()
         // Setup output
-        val out: OutputStream
-        out = FileOutputStream("src/main/resources/res/employee.pdf")
-        try {
+        val baos = ByteArrayOutputStream()
+        baos.use { baos ->
             // Construct fop with desired output format
-            val fop: Fop = fopFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out)
+            val fop: Fop = fopFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, baos)
 
             // Setup XSLT
             val factory = TransformerFactory.newInstance()
@@ -98,11 +76,8 @@ class PdfService {
             // That's where the XML is first transformed to XSL-FO and then
             // PDF is created
             transformer.transform(xmlSource, res)
-        } finally {
-            out.close()
         }
+        return baos.toByteArray()
     }
-
-    private fun getResource(resource: String) =
-        this.javaClass.getResource(resource)!!.readText()
+    
 }

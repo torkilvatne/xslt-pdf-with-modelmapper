@@ -17,7 +17,7 @@ class ShoppingService(
         return pdfService.serializeAsXML(CustomerPDF(listOf(customer)))
     }
 
-    fun createPdfFromCustomer(cid: Int, language: String): ByteArray? {
+    fun createPdfFromCustomer(cid: Int, language: String): ByteArray {
         return pdfService.generatePdf(createXmlFromCustomer(cid, language))
     }
 }
