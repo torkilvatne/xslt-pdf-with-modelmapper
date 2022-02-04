@@ -31,7 +31,7 @@ class ShoppingRestController(
     fun getCustomerPdfById(
         @PathVariable customerId: Int,
         @PathVariable language: String,
-    ): ResponseEntity<ByteArray> {
+    ): ResponseEntity<ByteArray?> {
         return ResponseEntity.ok(shoppingService.createPdfFromCustomer(customerId, language))
     }
 }
