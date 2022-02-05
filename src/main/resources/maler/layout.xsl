@@ -127,14 +127,15 @@
     <xsl:template name="checkbox">
         <fo:instream-foreign-object margin-right="5px">
             <svg xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(10, 10)">
-                <g transform="translate(0)">
-                    <g class="bar">
-                        <rect x="0" y="0" height="10" width="10"
-                              style="fill:white;stroke:black;stroke-width:1;fill-opacity:1;stroke-opacity:1"/>
+                <g transform="translate(10, 10)">
+                    <g transform="translate(0)">
+                        <g class="bar">
+                            <rect x="0" y="0" height="10" width="10"
+                                  style="fill:white;stroke:black;stroke-width:1;fill-opacity:1;stroke-opacity:1"/>
+                        </g>
                     </g>
                 </g>
-            </g>
+            </svg>
         </fo:instream-foreign-object>
     </xsl:template>
 
