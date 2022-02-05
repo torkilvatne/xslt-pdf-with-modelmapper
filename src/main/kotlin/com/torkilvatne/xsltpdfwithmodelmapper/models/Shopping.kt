@@ -10,42 +10,43 @@ import com.torkilvatne.xsltpdfwithmodelmapper.annotations.NoArg
 data class CustomerPDF(
     @get:JacksonXmlElementWrapper(localName = "customers")
     @get:JacksonXmlProperty(localName = "customer")
-    var customers: Collection<CustomerWithOrders>,
+    val customers: Collection<CustomerWithOrders>,
+    val qrCode: QrCode,
 )
 
 @NoArg
 data class CustomerWithOrders(
-    var customerId: Int,
-    var name: Name,
-    var address: Address,
+    val customerId: Int,
+    val name: Name,
+    val address: Address,
     @get:JacksonXmlElementWrapper(localName = "orders")
     @get:JacksonXmlProperty(localName = "order")
-    var orderList: List<OrderWithProduct>,
+    val orderList: List<OrderWithProduct>,
 )
 
 @NoArg
 data class Order(
-    var customerId: Int,
-    var productId: Int,
+    val customerId: Int,
+    val productId: Int,
 )
 
 @NoArg
 data class OrderWithProduct(
-    var customerId: Int,
-    var product: Product,
+    val customerId: Int,
+    val product: Product,
 )
 
 @NoArg
 data class Product(
-    var productId: Int,
+    val productId: Int,
     val price: Int,
 )
 
 @NoArg
 data class Customer(
-    var customerId: Int,
-    var name: Name,
-    var address: Address,
+    val customerId: Int,
+    val name: Name,
+    val address: Address,
 )
 
 @NoArg
@@ -59,3 +60,16 @@ data class Address(
     val street: String,
     val city: String,
 )
+
+@NoArg
+data class QrCode(
+    val base64: String,
+    val width: Int,
+    val height: Int,
+    val format: String
+) {
+    @JacksonXmlProperty
+    fun url(): String {
+        return "url(data:image/$format;base64,$base64)"
+    }
+}

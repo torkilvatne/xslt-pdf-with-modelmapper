@@ -4,10 +4,24 @@
     <xsl:template match="/">
         <fo:root>
             <fo:layout-master-set>
+
+                <!-- Here you define the page layouts with names -->
                 <fo:simple-page-master master-name="simpleA4"
-                                       page-height="29.7cm" page-width="21.0cm" margin="2cm">
+                                       page-height="29.7cm"
+                                       page-width="21.0cm"
+                                       margin="2cm">
                     <fo:region-body/>
                 </fo:simple-page-master>
+
+                <!-- Can define multiple and add them as <fo:page-sequence below -->
+                <!--<fo:simple-page-master master-name="lastPage" page-height="297mm" page-width="210mm"
+                                       margin-left="18mm" margin-right="27mm" margin-top="13mm" margin-bottom="3mm">
+                    <fo:region-body region-name="xsl-region-body" margin-top="34mm" margin-bottom="10mm"/>
+                    <fo:region-before extent="34mm"/>
+                    <fo:region-after extent="13mm"/>
+                </fo:simple-page-master>-->
+
+
             </fo:layout-master-set>
             <fo:page-sequence master-reference="simpleA4">
                 <fo:flow flow-name="xsl-region-body">
@@ -22,6 +36,7 @@
             Customer PDF
         </fo:block>
         <xsl:apply-templates/>
+        <xsl:call-template name="pageBreak"/>
     </xsl:template>
 
     <xsl:template match="customers">
@@ -61,7 +76,7 @@
 
     <xsl:template match="customer">
         <fo:table-row border-style="solid" border-color="black">
-            <fo:table-cell>
+            <fo:table-cell padding="5px">
                 <fo:block>
                     <fo:inline>
                         <xsl:value-of select="./name/firstName/text()"/>
@@ -71,12 +86,12 @@
                     </fo:inline>
                 </fo:block>
             </fo:table-cell>
-            <fo:table-cell>
+            <fo:table-cell padding="5px">
                 <fo:block>
                     <xsl:value-of select="./customerId/text()"/>
                 </fo:block>
             </fo:table-cell>
-            <fo:table-cell>
+            <fo:table-cell padding="5px">
                 <fo:block>
                     <xsl:apply-templates select="orders"/>
                 </fo:block>
@@ -91,11 +106,27 @@
     <xsl:template match="order">
         <fo:block>
             <fo:inline>
-                - <xsl:value-of select="./product/productId/text()"/>:
+                Product #<xsl:value-of select="./product/productId/text()"/>:
             </fo:inline>
             <fo:inline>
-                <xsl:value-of select="./product/price/text()"/>
+                <xsl:value-of select="./product/price/text()"/>,-
             </fo:inline>
+        </fo:block>
+    </xsl:template>
+
+    <xsl:template match="qrCode">
+        <fo:block>
+            <fo:external-graphic>
+                <xsl:attribute name="src">
+                    <xsl:value-of select="./url"/>
+                </xsl:attribute>
+            </fo:external-graphic>
+        </fo:block>
+    </xsl:template>
+
+    <xsl:template name="pageBreak">
+        <fo:block page-break-before="always">
+            This is a page break
         </fo:block>
     </xsl:template>
 
