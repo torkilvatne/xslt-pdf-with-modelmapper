@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.torkilvatne.xsltpdfwithmodelmapper.exceptions.CannotSerializeCustomerException
+import mu.KotlinLogging
 import org.apache.fop.apps.FOPException
 import org.apache.fop.apps.Fop
 import org.apache.fop.apps.FopFactory
@@ -17,6 +18,7 @@ import javax.xml.transform.TransformerFactory
 import javax.xml.transform.sax.SAXResult
 import javax.xml.transform.stream.StreamSource
 
+private val logger = KotlinLogging.logger {}
 
 @Service
 class PdfService {
@@ -27,6 +29,7 @@ class PdfService {
         try {
             return objectMapper.writeValueAsString(obj)
         } catch (e: CannotSerializeCustomerException) {
+            logger.info { "Can't serialize object: ${obj}" }
             throw CannotSerializeCustomerException("Can't serialize object: $obj")
         }
     }
