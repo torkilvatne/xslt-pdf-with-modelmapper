@@ -3,6 +3,8 @@
 
 ![Maven Build](https://github.com/torkilvatne/xslt-pdf-with-modelmapper/actions/workflows/maven.yml/badge.svg)
 
+[![Coverage](.github/badges/jacoco.svg)](https://github.com/torkilvatne/xslt-pdf-with-modelmapper/actions/workflows/maven.yml)
+
 <!-- GETTING STARTED -->
 ## Getting Started
 
