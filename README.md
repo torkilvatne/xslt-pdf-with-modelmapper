@@ -1,7 +1,7 @@
 # Using ModelMapper to produce PDF from XSLT
 <div id="top"></div>
 
-![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+![example workflow](https://github.com/torkilvatne/xslt-pdf-with-modelmapper/actions/workflows/maven/badge.svg)
 
 <!-- GETTING STARTED -->
 ## Getting Started
