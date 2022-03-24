@@ -1,7 +1,7 @@
 # Using ModelMapper to produce PDF from XSLT
 <div id="top"></div>
 
-![Tests](https://github.com/mCodingLLC/SlapThatLikeButton-TestingStarterProject/actions/workflows/tests.yml/badge.svg)
+![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 
 <!-- GETTING STARTED -->
 ## Getting Started
